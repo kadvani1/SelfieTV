@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<video autoplay id="vid"></video>
+<canvas id="photo" style="display:none"></canvas>
+
+<script>
+	app.use(express.static(__dirname + '/static'));
+	
+    var video = document.querySelector('video');
+    var canvas = document.getElementById('photo');
+    var ctx = canvas.getContext('2d');
+    var localMediaStream = null;
+
+    function capture() {
+        ctx.drawImage(video, 0, 0);
+        var img = document.createElement('img');
+        img.src = canvas.toDataURL('img/png');
+        document.body.appendChild(img)
+    }
+
+    video.addEventListener('click', capture, false);
+
+    // Not showing vendor prefixes or code that works cross-browser.
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video: true}, function(stream) {
+        if (window.URL) {
+            video.src = window.URL.createObjectURL(stream);
+        } else {
+            video.src = stream; // Opera.
+        }
+
+        video.onerror = function(e) {
+            stream.stop();
+        };
+
+        stream.onended = function(){};
+
+        video.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
+            console.log("Setting height", video.videoHeight)
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        };
+
+        // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
+        // to fake it.
+        setTimeout(function() {
+            console.log("Setting height", video.videoHeight)
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        }, 5000);
+    }, function(){
+        console.log("No video :(")
+    });
+
+    $.post('')
+</script>
+</body>
+</html>
