@@ -8,19 +8,150 @@
 <body>
 <video autoplay id="vid"></video>
 <canvas id="photo" style="display:none"></canvas>
+<div id="resp"></div>
+<div id="respEmo"></div>
 
 <script>
+
+    //    $.post('https://api.projectoxford.ai/emotion/v1.0/recognize', {
+    //        headers: {
+    //            'Ocp-Apim-Subscription-Key': 'e1276d5f08ae438ca10b0a7c19ef4e8c',
+    //            'Content-Type': 'application/json'
+    //        },
+    //        data: {
+    //            url: "http://www.tvmediainsights.com/wp-content/uploads/people-watching-tv.jpg"
+    //        }
+    //    }).done(function (r) {
+    //        console.log(r)
+    //    })
+
+    $(function () {
+
+    });
 
     var video = document.querySelector('video');
     var canvas = document.getElementById('photo');
     var ctx = canvas.getContext('2d');
     var localMediaStream = null;
 
+    function dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], {type:mimeString});
+    }
+
+    function detect(imageDataBlob) {
+        return $.ajax({
+                url: "https://api.projectoxford.ai/face/v1.0/detect?returnFaceAttributes=age,gender,headPose,smile,facialHair",
+                beforeSend: function (xhrObj) {
+                    // Request headers
+                    xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
+                    xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "84633bf2c350462ca105e4435aa317ae");
+                },
+                type: "POST",
+                // Request body
+                data: imageDataBlob,
+                    processData: false
+                })
+                .done(function (data) {
+                    console.log("success");
+                    console.log(data)
+                    $("#resp").html("<ol>" + data.map(function (x) {
+                        return "<li>" +
+                                        "<ul>" +
+                                "<li>Age: " + x.faceAttributes.age + "</li>" +
+                                "<li>Gender: " + x.faceAttributes.gender + "</li>" +
+                                "<li>Beard: " + x.faceAttributes.facialHair.beard + "</li>" +
+                                "<li>Moustache: " + x.faceAttributes.facialHair.moustache + "</li>" +
+                                "<li>Smile: " + x.faceAttributes.smile + "</li>" +
+                                "</ul>"
+                                + "</li>"
+                    }) + "</ol>")
+                })
+                .fail(function (e) {
+                    alert("error");
+                    console.log(e)
+                });
+    }
+
+    function emotion(imageDataBlob) {
+        var detResult = detect(imageDataBlob);
+
+        return $.ajax({
+                    url: "https://api.projectoxford.ai/emotion/v1.0/recognize",
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
+                        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "e1276d5f08ae438ca10b0a7c19ef4e8c");
+                    },
+                    type: "POST",
+                    // Request body
+                    data: imageDataBlob,//.replace(/^data:image.+;base64,/, ""),
+                    processData: false
+                })
+                .done(function (eData) {
+                    console.log("success");
+                    console.log(eData)
+                    $("#respEmo").html("<ol>" + eData.map(function (x) {
+                                return "<li>" + JSON.stringify(x.scores) + "</li>"
+                            }) + "</ol>")
+                    
+                    detResult.then(function (dData) {
+                        var i = 0
+                        $("#resp").html("<ol>" + dData.map(function (dd) {
+                                    var ee = eData[i++]
+                                    if(ee)
+                                    return "<li>" +
+                                            "<ul>" +
+                                            "<li>Age: " + dd.faceAttributes.age + "</li>" +
+                                            "<li>Gender: " + dd.faceAttributes.gender + "</li>" +
+                                            "<li>Beard: " + dd.faceAttributes.facialHair.beard + "</li>" +
+                                            "<li>Moustache: " + dd.faceAttributes.facialHair.moustache + "</li>" +
+                                            "<li>Smile: " + dd.faceAttributes.smile + "</li>" +
+                                            "<li>Anger: " + ee.scores.anger + "</li>" +
+                                            "<li>Disgust: " + ee.scores.disgust + "</li>" +
+                                            "<li>Fear: " + ee.scores.fear + "</li>" +
+                                            "<li>happiness: " + ee.scores.happiness + "</li>" +
+                                            "<li>sadness: " + ee.scores.sadness + "</li>" +
+                                            "<li>surprise: " + ee.scores.surprise + "</li>" +
+                                            "<li>neutral: " + ee.scores.neutral + "</li>" +
+                                            "</ul>"
+                                            + "</li>"
+                                }) + "</ol>")
+                    })
+                })
+                .fail(function (e) {
+                    alert("error");
+                    console.log(e)
+                });
+    }
+
     function capture() {
         ctx.drawImage(video, 0, 0);
         var img = document.createElement('img');
         img.src = canvas.toDataURL('img/png');
+        console.log(canvas.toDataURL())
         document.body.appendChild(img)
+
+        var imageData = canvas.toDataURL("image/png")
+        var imageDataBlob = dataURItoBlob(imageData)
+
+        emotion(imageDataBlob)
+
     }
 
     video.addEventListener('click', capture, false);
@@ -28,20 +159,21 @@
     // Not showing vendor prefixes or code that works cross-browser.
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    navigator.getUserMedia({video: true}, function(stream) {
+    navigator.getUserMedia({video: true}, function (stream) {
         if (window.URL) {
             video.src = window.URL.createObjectURL(stream);
         } else {
             video.src = stream; // Opera.
         }
 
-        video.onerror = function(e) {
+        video.onerror = function (e) {
             stream.stop();
         };
 
-        stream.onended = function(){};
+        stream.onended = function () {
+        };
 
-        video.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
+        video.onloadedmetadata = function (e) { // Not firing in Chrome. See crbug.com/110938.
             console.log("Setting height", video.videoHeight)
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -49,12 +181,12 @@
 
         // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
         // to fake it.
-        setTimeout(function() {
+        setTimeout(function () {
             console.log("Setting height", video.videoHeight)
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
         }, 5000);
-    }, function(){
+    }, function () {
         console.log("No video :(")
     });
 
