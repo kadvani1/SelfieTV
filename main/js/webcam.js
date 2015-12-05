@@ -94,8 +94,10 @@ function upload(imageDataBlob) {
                     var maxEmotion = ""
                     Object.keys(ee.scores).forEach(function (k) {
                         var x = ee.scores[k]
-                        if(x > max)
+                        if(x > max) {
                             maxEmotion = k
+                            max = x
+                        }
                     })
 
                     if (ee)
