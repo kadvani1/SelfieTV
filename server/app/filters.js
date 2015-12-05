@@ -12,109 +12,165 @@ var getFilters = exports.getFilters = function (number_of_people, photo, gender)
   }
 
   function tags(photo) {
-
+  var res = {
+    tags: [],
+    sub_genres: [],
+    genre: null
+  };
       var tags = [];
       if (number_of_people == 1) {
-
+          if(gender[0] == "m"){
           if (age(photo) < 10) {
 
-              tags = ["kids", "cartoon", "adventures", "animation", "superhero"];
-              return tags;
+              res.tags = ["kids","cartoon","adventures","animation","superhero"];
+               res.sub_genres = ["comedy","animation","cartoon"];
 
           }
           if (age(photo) >= 10 && age(photo) < 20) {
 
-              tags = ["teen", "comedy", "romance", "love", "sitcom", "friend", "musical", "high-school", "teen-comedy", "sport", "music"];
-              return tags;
+              res.tags = ["teen","comedy","romance","love","sitcom","friend","musical","high-school","teen-comedy","sport","music"];
+               res.sub_genres = ["drama","pop","high-school","reality","chat shows"];
 
           }
           if (age(photo) >= 20 && age(photo) < 30) {
 
-              tags = ["football", "sport", "motorsport"];
-              return tags;
+              res.tags = ["football","sport","motorsport"];
+               res.sub_genres = ["news","world affairs"," showbiz","friends","friend"];
+    
 
           }
           if (age(photo) >= 30 && age(photo) < 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+              res.tags = ["football","sport","motorsport","culture","documentary"];
+               res.sub_genres = ["family","people","news","culture","technology"];
+
 
           }
           if (age(photo) >= 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+              res.tags = ["football","sport","motorsport","culture","documentary"];
+              res.sub_genres = ["family","people","news","culture","technology","reality","world affairs"];
 
           }
+        } else if (gender[0] == "f"){
+
+
+        }
       } else if (number_of_people == 2) {
-
+          if(gender[0] == "m" && gender[1] == "f"){
           if (age(photo) < 10) {
 
-              tags = ["kids", "cartoon", "adventures", "animation", "superhero"];
-              return tags;
+             
 
           }
           if (age(photo) >= 10 && age(photo) < 20) {
 
-              tags = ["teen", "comedy", "romance", "love", "sitcom", "friend", "musical", "high-school", "teen-comedy", "sport", "music"];
-              return tags;
+              
 
           }
           if (age(photo) >= 20 && age(photo) < 30) {
 
-              tags = ["football", "sport", "motorsport"];
-              return tags;
-
+              
           }
           if (age(photo) >= 30 && age(photo) < 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+              
 
           }
           if (age(photo) >= 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+              
 
           }
+        } else if(gender[0] == "m" && gender[1] == "m"){
+
+          // 2 MEN
+          if (age(photo) < 10) {
+
+             
+
+          }
+          if (age(photo) >= 10 && age(photo) < 20) {
+
+              
+
+          }
+          if (age(photo) >= 20 && age(photo) < 30) {
+
+              
+          }
+          if (age(photo) >= 30 && age(photo) < 40) {
+
+              
+
+          }
+          if (age(photo) >= 40) {
+
+              
+
+          }
+
+        } else if(gender[0] == "f" && gender[1] == "f"){
+
+          //MEN AND WOMEN
+          if (age(photo) < 10) {
+
+             
+
+          }
+          if (age(photo) >= 10 && age(photo) < 20) {
+
+              
+
+          }
+          if (age(photo) >= 20 && age(photo) < 30) {
+
+              
+          }
+          if (age(photo) >= 30 && age(photo) < 40) {
+
+              
+
+          }
+          if (age(photo) >= 40) {
+
+              
+
+          }
+
+        }
 
 
       } else if (number_of_people > 2) {
 
           if (age(photo) < 10) {
 
-              tags = ["kids", "cartoon", "adventures", "animation", "superhero"];
-              return tags;
+              
 
           }
           if (age(photo) >= 10 && age(photo) < 20) {
 
-              tags = ["teen", "comedy", "romance", "love", "sitcom", "friend", "musical", "high-school", "teen-comedy", "sport", "music"];
-              return tags;
+              
 
           }
           if (age(photo) >= 20 && age(photo) < 30) {
 
-              tags = ["football", "sport", "motorsport"];
-              return tags;
+              
 
           }
           if (age(photo) >= 30 && age(photo) < 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+              
 
           }
           if (age(photo) >= 40) {
 
-              tags = ["football", "sport", "motorsport", "culture", "documentary"];
-              return tags;
+             
 
           }
       }
   }
-  return tags(photo);
+  return res;
 }
 
 module.exports = exports;
