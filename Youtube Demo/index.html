@@ -16,6 +16,11 @@
             color: white;
             font-size: x-large;
         }
+
+        #vid  {
+            width: 200px;
+
+        }
     </style>
 
 </head>
@@ -23,7 +28,10 @@
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
-    <div id="x">HELLLO</div>
+    <div id="x">
+    <video autoplay id="vid" class="img-rounded"></video>
+<canvas id="photo" style="display:none"></canvas>
+    </div>
 
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
@@ -40,7 +48,7 @@
         player = new YT.Player('player', {
           height: window.innerHeight,
           width: window.innerWidth,
-          videoId: 'M7lc1UVf-VE',
+          videoId: 'a6738DN4I3s',
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -67,5 +75,46 @@
         player.stopVideo();
       }
     </script>
+
+    <script>
+
+    var video = document.getElementById('vid');
+    var canvas = document.getElementById('photo');
+    var ctx = canvas.getContext('2d');
+    var localMediaStream = null;
+
+    // Not showing vendor prefixes or code that works cross-browser.
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia({video: true}, function(stream) {
+        if (window.URL) {
+            video.src = window.URL.createObjectURL(stream);
+        } else {
+            video.src = stream; // Opera.
+        }
+
+        video.onerror = function(e) {
+            stream.stop();
+        };
+
+        stream.onended = function(){};
+
+        video.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
+            console.log("Setting height", video.videoHeight)
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        };
+
+        // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
+        // to fake it.
+        setTimeout(function() {
+            console.log("Setting height", video.videoHeight)
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+        }, 5000);
+    }, function(){
+        console.log("No video :(")
+    });
+</script>
   </body>
 </html>
