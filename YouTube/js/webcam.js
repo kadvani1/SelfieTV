@@ -82,12 +82,15 @@ function emotion(imageDataBlob) {
         });
 }
 
-function upload(imageDataBlob) {
+//JSON data
+
+      function upload(imageDataBlob) {
     var e = emotion(imageDataBlob)
     var d = detect(imageDataBlob)
     e.then(function (eData) {
         d.then(function (dData) {
             var i = 0
+            var people = []
             $("#x div").html("<ol>" + dData.map(function (dd) {
                     var ee = eData[i++]
                     var max = 0
@@ -100,7 +103,12 @@ function upload(imageDataBlob) {
                         }
                     })
 
-                    if (ee)
+                    if (ee) {
+                      var person = {
+                        age: dd.faceAttributes.age,
+                        gender: dd.faceAttributes.gender
+                      }
+                      people.push(person)
                         return "<li>" +
                             "<ul>" +
                             "<li>Age: " + dd.faceAttributes.age + "</li>" +
@@ -111,7 +119,11 @@ function upload(imageDataBlob) {
                             "<li>Emotion " + maxEmotion + " </li>" +
                             "</ul>"
                             + "</li>"
+                        
+                      }
                 }) + "</ol>")
+
+          updateVideo(people)
         })
     })
 }
@@ -145,7 +157,7 @@ navigator.getUserMedia({video: true}, function (stream) {
         console.log("Setting height", video.videoHeight)
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-        setInterval(capture, 6000)
+        setInterval(capture, 4000)
         capture()
     }, 4000);
 }, function () {

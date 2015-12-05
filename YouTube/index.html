@@ -22,9 +22,8 @@
 
         #x div {
             background-color: white;
-            height: 200px;
             font-size: smaller;
-            color: blue;
+            color: black;
         }
 
         #x div ul {
@@ -36,7 +35,7 @@
 
         }
     </style>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -52,18 +51,29 @@
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
-      tag.src = "https://www.youtube.com/iframe_api";
+      tag.src = "http://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
+
+      var videos = {
+        'sex in the city': 'a6738DN4I3s',
+        'game of thrones': 'y0OqdTUf4sc',
+        'american psycho': 'qQx_AN02XuM',
+        'top gear':'FssQhpAqv1I',
+        'top gear 2':'DrUVMdkb4_k',
+        'football':'',
+      }
+
+
       function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
           height: window.innerHeight,
           width: window.innerWidth,
-          videoId: 'a6738DN4I3s',
+          videoId: videos['american psycho'],
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -71,10 +81,40 @@
         });
       }
 
+      function updateVideo(people) {
+        if(people.length == 1)
+        {
+          changeVideo('american psycho')
+        }
+        else if (people[0].gender == 'female') {
+          changeVideo('sex in the city')
+        }
+        else if (people.length == 2) {
+          changeVideo('top gear 2')
+        }
+        else if (people.length ==3)
+          changeVideo('top gear')
+      }
+
+      function changeVideo(i) {
+        var next = videos[i]
+        var current = player.getVideoData()['video_id'];
+        if(next != current)
+        player.loadVideoById({
+          videoId: next,
+          startSeconds: 5
+        })
+      }
+
+
+      
+
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
         event.target.playVideo();
       }
+
+
 
       // 5. The API calls this function when the player's state changes.
       //    The function indicates that when playing a video (state=1),
@@ -82,7 +122,7 @@
       var done = false;
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
+          // setTimeout(stopVideo, 6000);
           done = true;
         }
       }
