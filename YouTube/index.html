@@ -2,7 +2,10 @@
 <html>
 
 <head>
-    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sky</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
 
         body {
@@ -17,12 +20,23 @@
             font-size: x-large;
         }
 
+        #x div {
+            background-color: white;
+            height: 200px;
+            font-size: smaller;
+            color: blue;
+        }
+
+        #x div ul {
+            padding: 4px
+        }
+
         #vid  {
             width: 200px;
 
         }
     </style>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -31,6 +45,7 @@
     <div id="x">
     <video autoplay id="vid"></video>
 <canvas id="photo" style="display:none"></canvas>
+        <div></div>
     </div>
 
     <script>
@@ -76,45 +91,6 @@
       }
     </script>
 
-    <script>
-
-    var video = document.getElementById('vid');
-    var canvas = document.getElementById('photo');
-    var ctx = canvas.getContext('2d');
-    var localMediaStream = null;
-
-    // Not showing vendor prefixes or code that works cross-browser.
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia || navigator.msGetUserMedia;
-    navigator.getUserMedia({video: true}, function(stream) {
-        if (window.URL) {
-            video.src = window.URL.createObjectURL(stream);
-        } else {
-            video.src = stream; // Opera.
-        }
-
-        video.onerror = function(e) {
-            stream.stop();
-        };
-
-        stream.onended = function(){};
-
-        video.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
-            console.log("Setting height", video.videoHeight)
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-        };
-
-        // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
-        // to fake it.
-        setTimeout(function() {
-            console.log("Setting height", video.videoHeight)
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-        }, 5000);
-    }, function(){
-        console.log("No video :(")
-    });
-</script>
+    <script src="js/webcam.js"></script>
   </body>
 </html>
