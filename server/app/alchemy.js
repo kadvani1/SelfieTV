@@ -10,7 +10,7 @@ var alchemy_vision = watson.alchemy_vision({
 // Use quickthumb
 app.use(qt.static(__dirname + '/'));
 
-function(req, res) {
+app.post('/face_recg', function(req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {});
 
@@ -43,16 +43,12 @@ function(req, res) {
             }
         });
     });
-}
+});
 
-
-// app.post('/upload', );
-
-
-// app.get('/getFaces', function(req, res) {
-//     res.writeHead(200, {
-//         'Content-Type': 'text/html'
-//     });
-//     var form = '<form action="/upload" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
-//     res.end(form);
-// });
+app.get('/face_recg', function(req, res) {
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    var form = '<form action="/face_recg" enctype="multipart/form-data" method="post">Add a title: <input name="title" type="text" /><br><br><input multiple="multiple" name="upload" type="file" /><br><br><input type="submit" value="Upload" /></form>';
+    res.end(form);
+});

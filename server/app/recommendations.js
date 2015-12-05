@@ -28,7 +28,6 @@ module.exports = {
 
         return knex.select('tags')
             .from('sky_programme_metadata')
-            .where('tags', 'like', '%' + key_word + '%')
             .then(function(rows) {
                 return _.pluck(rows, 'tags');
             });

@@ -50,6 +50,24 @@ app.get('/', function(req, res, next) {
         });
 });
 
+app.get('/test', function(req, res, next) {
+
+    recs.getTags()
+        .then(function(results) {
+
+            var uniqTags = [];
+            results.forEach(function function_name (tag) {
+                uniqTags.concat(tag)
+            })
+            res.json({
+                tags: uniqTags
+            });
+        })
+        .catch(function(error) {
+            console.error(error);
+            return next(new Error("Something went wrong"));
+        });
+});
 
 var server = app.listen(3000, function() {
     var host = server.address().address;
