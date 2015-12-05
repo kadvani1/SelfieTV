@@ -13,13 +13,25 @@
 		<script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
         <style>
    .vertical-center {
-                margin-top: 9%;
+                margin-top: 1%;
             }
             #who{
 
     color: rgb(248,248,255);
     font-size: 70px;
 
+}
+ #personalize{
+
+    color: rgb(248,248,255);
+    font-size: 30px;
+
+}
+
+#video{
+
+    width: 450px;
+    height: 450px;
 }
             </style>
     </head>
@@ -39,13 +51,16 @@
     <div class="container vertical-center">
     <div class="col-sm-8 center col-md-8 col-md-offset-2">
     <div class = "text-center">
-      <h1 id = "who">Who is going to watch TV today?</h1>
+      <h1 id = "who">SelfieTV</h1>
+      <h3 id = "personalize">Personalize Your TV Experience<h3>
 
       <p><a id = "snap-btn" class="btn btn-danger btn-lg" href="#" role="button">Take a snap</a></p>
     </div>
+    <div class="text-center">
+    <video id = "video" autoplay id="vid"></video>
 
-    <video autoplay id="vid"></video>
     <canvas id="photo" style="display:none"></canvas>
+    </div>
     </div>
 
     </div>
@@ -67,6 +82,7 @@
             ctx.drawImage(video, 0, 0);
             var img = document.createElement('img');
             img.src = canvas.toDataURL('img/png');
+            console.log(img.src);
             // document.body.appendChild(img)
         }
 
