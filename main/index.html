@@ -35,17 +35,17 @@
 
         </ul>
         <div class="container">
-            
-
-
 
     <div class="container vertical-center">
     <div class="col-sm-8 center col-md-8 col-md-offset-2">
     <div class = "text-center">
       <h1 id = "who">Who is going to watch TV today?</h1>
 
-      <p><a id = "btn "class="btn btn-danger btn-lg" href="#" role="button">Take a snap</a></p>
+      <p><a id = "snap-btn" class="btn btn-danger btn-lg" href="#" role="button">Take a snap</a></p>
     </div>
+
+    <video autoplay id="vid"></video>
+    <canvas id="photo" style="display:none"></canvas>
     </div>
 
     </div>
@@ -54,4 +54,60 @@
             </header>
         </div>
     </body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script>
+
+        var video = document.querySelector('video');
+        var canvas = document.getElementById('photo');
+        var ctx = canvas.getContext('2d');
+        var localMediaStream = null;
+
+        function capture() {
+            ctx.drawImage(video, 0, 0);
+            var img = document.createElement('img');
+            img.src = canvas.toDataURL('img/png');
+            // document.body.appendChild(img)
+        }
+
+        // video.addEventListener('click', capture, false);
+        $('#snap-btn').click(function (argument) {
+            console.log("taking a snap")
+            capture();
+        })
+
+        // Not showing vendor prefixes or code that works cross-browser.
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia;
+        navigator.getUserMedia({video: true}, function(stream) {
+            if (window.URL) {
+                video.src = window.URL.createObjectURL(stream);
+            } else {
+                video.src = stream; // Opera.
+            }
+
+            video.onerror = function(e) {
+                stream.stop();
+            };
+
+            stream.onended = function(){};
+
+            video.onloadedmetadata = function(e) { // Not firing in Chrome. See crbug.com/110938.
+                console.log("Setting height", video.videoHeight)
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+            };
+
+            // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
+            // to fake it.
+            setTimeout(function() {
+                console.log("Setting height", video.videoHeight)
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+            }, 5000);
+        }, function(){
+            console.log("No video :(")
+        });
+
+    </script>
 </html>
