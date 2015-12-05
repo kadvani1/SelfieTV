@@ -88,8 +88,16 @@ function upload(imageDataBlob) {
     e.then(function (eData) {
         d.then(function (dData) {
             var i = 0
-            $("#resp").html("<ol>" + dData.map(function (dd) {
+            $("#x div").html("<ol>" + dData.map(function (dd) {
                     var ee = eData[i++]
+                    var max = 0
+                    var maxEmotion = ""
+                    Object.keys(ee.scores).forEach(function (k) {
+                        var x = ee.scores[k]
+                        if(x > max)
+                            maxEmotion = k
+                    })
+
                     if (ee)
                         return "<li>" +
                             "<ul>" +
@@ -98,13 +106,7 @@ function upload(imageDataBlob) {
                             "<li>Beard: " + dd.faceAttributes.facialHair.beard + "</li>" +
                             "<li>Moustache: " + dd.faceAttributes.facialHair.moustache + "</li>" +
                             "<li>Smile: " + dd.faceAttributes.smile + "</li>" +
-                            "<li>Anger: " + ee.scores.anger + "</li>" +
-                            "<li>Disgust: " + ee.scores.disgust + "</li>" +
-                            "<li>Fear: " + ee.scores.fear + "</li>" +
-                            "<li>happiness: " + ee.scores.happiness + "</li>" +
-                            "<li>sadness: " + ee.scores.sadness + "</li>" +
-                            "<li>surprise: " + ee.scores.surprise + "</li>" +
-                            "<li>neutral: " + ee.scores.neutral + "</li>" +
+                            "<li>Emotion " + maxEmotion + " </li>" +
                             "</ul>"
                             + "</li>"
                 }) + "</ol>")
@@ -141,7 +143,9 @@ navigator.getUserMedia({video: true}, function (stream) {
         console.log("Setting height", video.videoHeight)
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-    }, 5000);
+        setInterval(capture, 6000)
+        capture()
+    }, 4000);
 }, function () {
     console.log("No video :(")
 });
