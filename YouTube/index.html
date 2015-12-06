@@ -18,21 +18,30 @@
             top: 10px;
             color: white;
             font-size: x-large;
+
         }
 
         #x div {
-            background-color: white;
+            background-color: black;
+            opacity: 0.7;
             font-size: smaller;
-            color: black;
+            font-family: 'Andale Mono', AndaleMono, monospace;
+            color: green;
         }
 
         #x div ul {
-            padding: 4px
+            padding: 4px;
         }
 
         #vid  {
             width: 200px;
 
+        }
+        ol {
+          padding:0px;
+        }
+        li {
+          list-style-type: none;
         }
     </style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -65,7 +74,14 @@
         'american psycho': 'qQx_AN02XuM',
         'top gear':'FssQhpAqv1I',
         'top gear 2':'DrUVMdkb4_k',
-        'football':'',
+        'football':'4PE10OLJtmU',
+        'forrest gump':'wvJ4wh1kwR8',
+        'the prestige':'ijXruSzfGEc',
+        'star wars':'tUW7EDJmWUA',
+        'fifty':'SfZWFDs0LxA',
+        'gopro':'wTcNtgA6gHs',
+        'national':'cr-er44rr2M',
+        'bond':'BsBd9tPK4uE'
       }
 
 
@@ -73,24 +89,29 @@
         player = new YT.Player('player', {
           height: window.innerHeight,
           width: window.innerWidth,
-          videoId: videos['american psycho'],
+          videoId: videos['national'],
+          startSeconds: 8,
+          suggestedQuality: 'highres',
+
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
+
           }
         });
+      
       }
 
       function updateVideo(people) {
-        if(people.length == 1)
+        if(people.length == 1&&people[0].gender=='male')
         {
-          changeVideo('american psycho')
+          changeVideo('national')
         }
         else if (people[0].gender == 'female') {
           changeVideo('sex in the city')
         }
         else if (people.length == 2) {
-          changeVideo('top gear 2')
+          changeVideo('bond')
         }
         else if (people.length ==3)
           changeVideo('top gear')
@@ -102,7 +123,8 @@
         if(next != current)
         player.loadVideoById({
           videoId: next,
-          startSeconds: 5
+          startSeconds: 8,
+          suggestedQuality: 'highres'
         })
       }
 
