@@ -47,11 +47,7 @@
     }
 
     function updateVideo(people) {
-        if (people.length == 1 && people[0].gender == 'male' && people[0].emotion == 'happiness')  {
-            changeVideo('top gear 2')
-        }
-
-        else if (people.length == 1 && people[0].gender == 'male') {
+        if (people.length == 1 && people[0].gender == 'male') {
             changeVideo('national')
             // $("#adtext").empty().append($("<p></p>").text('Buy The National Geographic Movie'))
         } 
