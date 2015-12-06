@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>SelfieTV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+
+<body>
+    <div id="frame">
+        <img src="home.png" class="img-responsive">
+    </div>
+    <div id="webcam">
+        <video autoplay id="vid"></video>
+        <canvas id="photo" style="display:none" ></canvas>
+        <div id="messages"></div>
+        <div id="ads">
+            <div id="adtext">
+            </div>
+        </div>
+    </div>
+    <script src="js/webcam.js"></script>
+        <script src="js/youtube.js"></script>
+
+</body>
+
+</html>
