@@ -17,6 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "WebcamSwiper": "https://github.com/iambrandonn/WebcamSwiper.git"
+    "smoothie": "https://github.com/joewalnes/smoothie.git#~1.27.0"
   }
 }

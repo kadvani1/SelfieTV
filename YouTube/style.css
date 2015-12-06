@@ -63,3 +63,10 @@ body {
         padding: 3px;
         padding-bottom: 7px;
     }
+
+    canvas#chart {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        border-radius: 5px
+    }
