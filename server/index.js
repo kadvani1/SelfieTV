@@ -1,39 +1,20 @@
 var express = require('express');
 var app = express();
 var _ = require('underscore');
+var async = require("async");
 
 var recs = require('./app/recommendations');
 var filters = require('./app/filters');
-
-async = require("async");
-
-// // 1st para in async.each() is the array of items
-// async.each(items,
-//   // 2nd param is the function that each item is passed to
-//   function(item, callback){
-//     // Call an asynchronous function, often a save() to DB
-//     item.someAsyncCall(function (){
-//       // Async call is done, alert via callback
-//       callback();
-//     });
-//   },
-//   // 3rd param is the function to call when everything's done
-//   function(err){
-//     // All tasks are done now
-//     doSomethingOnceAllAreDone();
-//   }
-// );
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 app.get('/', function(req, res, next) {
 
-    var number_of_people = 1;
-    var photo = [9];
-    var gender = ['m'];
+    var number_of_people = req.query.num;
+    var photo = req.query.ages.split(',');
+    var gender = req.query.genders.split(',');
 
     var tags = filters.getFilters(photo, number_of_people, gender);
     console.log(tags)
@@ -62,7 +43,7 @@ app.get('/test', function(req, res, next) {
                     return line.split(';');
                 })
                 .flatten()
-                .reduce(function(counts, word) {
+                .reduce(function(word) {
                     counts[word] = (counts[word] || 0) + 1;
                     return counts;
                 }, {})

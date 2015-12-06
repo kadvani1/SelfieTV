@@ -23,6 +23,9 @@ module.exports = {
             subquery.orWhere('sub-genres', 'like', '%' + sub_genre + '%')
         });
 
+        if (res.no_sub_genres.length <= 0 ) {
+            res.no_sub_genres = ['test']
+        };
         var subquery2 = knex
             .select('name')
 
