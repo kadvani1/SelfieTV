@@ -145,21 +145,23 @@ navigator.getUserMedia({video: true}, function (stream) {
     stream.onended = function () {
     };
 
-    video.onloadedmetadata = function (e) { // Not firing in Chrome. See crbug.com/110938.
-        console.log("Setting height", video.videoHeight)
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-    };
+var alreadyDone = false
+    function launch() {
+        if(!alreadyDone) {
+            alreadyDone = true
+            console.log("Setting height", video.videoHeight)
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            setInterval(capture, 4000)
+            capture()
+        }
+    }
+
+    video.onloadedmetadata = launch;
 
     // Since video.onloadedmetadata isn't firing for getUserMedia video, we have
     // to fake it.
-    setTimeout(function () {
-        console.log("Setting height", video.videoHeight)
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        setInterval(capture, 4000)
-        capture()
-    }, 4000);
+    setTimeout(launch, 4000);
 }, function () {
     console.log("No video :(")
 });
