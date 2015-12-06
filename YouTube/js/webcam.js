@@ -7,7 +7,7 @@ var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 
 function choose(arr) {
-    return arr[Math.floor(Math.random() * myArray.length)]
+    return arr[Math.floor(Math.random() * arr.length)]
 }
 
 function capture() {
@@ -46,7 +46,8 @@ function detect(imageDataBlob) {
             beforeSend: function (xhrObj) {
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "84633bf2c350462ca105e4435aa317ae");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",
+                    choose(["84633bf2c350462ca105e4435aa317ae", "2e87d66f93c241dd8ec805d09c38f92b", "f7b776d5d3a84e3a9f48f3ff12d067af"]));
             },
             type: "POST",
             // Request body
@@ -68,7 +69,8 @@ function emotion(imageDataBlob) {
             beforeSend: function (xhrObj) {
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "e1276d5f08ae438ca10b0a7c19ef4e8c");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",
+                    choose(["e1276d5f08ae438ca10b0a7c19ef4e8c", "c14f3203d1904ec298aca7c44efd89dd", "3debebcc0f37452aa435e081683b4faa"]));
             },
             type: "POST",
             // Request body

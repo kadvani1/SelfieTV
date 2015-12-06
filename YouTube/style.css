@@ -9,6 +9,10 @@ body {
         color: white;
         font-size: x-large;
     }
+
+    video, #webcam div {
+        border-radius: 5px
+    }
     
     #webcam #messages {
         background-color: black;
