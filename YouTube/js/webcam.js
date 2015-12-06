@@ -116,7 +116,7 @@ function emotion(imageDataBlob) {
                             "<li>Beard: " + dd.faceAttributes.facialHair.beard + "</li>" +
                             "<li>Moustache: " + dd.faceAttributes.facialHair.moustache + "</li>" +
                             "<li>Smile: " + dd.faceAttributes.smile + "</li>" +
-                            "<li>Emotion " + maxEmotion + " </li>" +
+                            "<li>Emotion: " + maxEmotion + " </li>" +
                             "</ul>"
                             + "</li>"
                         

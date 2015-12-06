@@ -80,7 +80,8 @@
         'star wars':'tUW7EDJmWUA',
         'fifty':'SfZWFDs0LxA',
         'gopro':'wTcNtgA6gHs',
-        '':'',
+        'national':'cr-er44rr2M',
+        'bond':'BsBd9tPK4uE'
       }
 
 
@@ -88,7 +89,7 @@
         player = new YT.Player('player', {
           height: window.innerHeight,
           width: window.innerWidth,
-          videoId: videos['gopro'],
+          videoId: videos['national'],
           startSeconds: 8,
           suggestedQuality: 'highres',
 
@@ -102,15 +103,15 @@
       }
 
       function updateVideo(people) {
-        if(people.length == 1)
+        if(people.length == 1&&people[0].gender=='male')
         {
-          changeVideo('gopro')
+          changeVideo('national')
         }
         else if (people[0].gender == 'female') {
           changeVideo('sex in the city')
         }
         else if (people.length == 2) {
-          changeVideo('top gear 2')
+          changeVideo('bond')
         }
         else if (people.length ==3)
           changeVideo('top gear')
