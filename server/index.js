@@ -37,12 +37,9 @@ app.get('/', function(req, res, next) {
     recs.getMatches(tags)
         .then(function(results) {
 
-
             res.json({
                 matches: results
             });
-
-
         })
         .catch(function(error) {
             console.error(error);
@@ -56,9 +53,18 @@ app.get('/test', function(req, res, next) {
         .then(function(results) {
 
             var uniqTags = [];
-            results.forEach(function function_name (tag) {
-                uniqTags.concat(tag)
-            })
+
+            uniqTags = _.chain(results)
+                .map(function(line) {
+                    return line.split(';');
+                })
+                .flatten()
+                .reduce(function(counts, word) {
+                    counts[word] = (counts[word] || 0) + 1;
+                    return counts;
+                }, {})
+                .value();
+
             res.json({
                 tags: uniqTags
             });
