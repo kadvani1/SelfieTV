@@ -6,6 +6,10 @@ var canvas = document.getElementById('photo');
 var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 
+function choose(arr) {
+    return arr[Math.floor(Math.random() * myArray.length)]
+}
+
 function capture() {
     ctx.drawImage(video, 0, 0);
     var img = document.createElement('img');
@@ -107,18 +111,18 @@ function emotion(imageDataBlob) {
                           age: dd.faceAttributes.age,
                           gender: dd.faceAttributes.gender,
                           emotion: maxEmotion,
-                          beard: dd.faceAttributes.facialHair.beard,
-                          moustache: dd.faceAttributes.facialHair.moustache,
-                          smile: dd.faceAttributes.smile
+                          beard: Math.round(dd.faceAttributes.facialHair.beard * 10) / 10,
+                          moustache: Math.round(dd.faceAttributes.facialHair.moustache * 10) / 10,
+                          smile: dd.faceAttributes.smile == null ? 0 : Math.round(dd.faceAttributes.smile * 10) / 10
                       }
                       people.push(person)
                         return "<li>" +
                             "<ul>" +
-                            "<li>Age: " + dd.faceAttributes.age + "</li>" +
-                            "<li>Gender: " + dd.faceAttributes.gender + "</li>" +
-                            "<li>Beard: " + dd.faceAttributes.facialHair.beard + "</li>" +
-                            "<li>Moustache: " + dd.faceAttributes.facialHair.moustache + "</li>" +
-                            "<li>Smile: " + dd.faceAttributes.smile + "</li>" +
+                            "<li>Age: " + person.age + "</li>" +
+                            "<li>Gender: " + person.gender + "</li>" +
+                            "<li>Beard: " + person.beard + "</li>" +
+                            "<li>Moustache: " + person.moustache + "</li>" +
+                            "<li>Smile: " + person.smile + "</li>" +
                             "<li>Emotion: " + maxEmotion + " </li>" +
                             "</ul>"
                             + "</li>"
@@ -142,6 +146,9 @@ function emotion(imageDataBlob) {
                     .css({top: top + "px", left: left + "px", width: width + "px", height: height + "px"})
                 $("#webcam").append(facebox)
             })
+            setTimeout(function () {
+                $(".facebox").remove()
+            }, 1000)
         })
     })
 }

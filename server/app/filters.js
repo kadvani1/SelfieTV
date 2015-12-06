@@ -226,7 +226,7 @@ var getFilters = exports.getFilters = function (photo, number_of_people, gender)
           if (age(photo) >= 40) {
 
               res.tags = ["friends","debate","history","movie","news","enjoy","laugh","documentary","together","people","sport"];
-               res.sub_genres = ["news","showbiz","friends","friend","party","evening"];
+               res.sub_genres = ["showbiz","friends","friend","party","evening"];
              
 
           }
