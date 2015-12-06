@@ -142,6 +142,9 @@ function emotion(imageDataBlob) {
                     .css({top: top + "px", left: left + "px", width: width + "px", height: height + "px"})
                 $("#webcam").append(facebox)
             })
+            setTimeout(function () {
+                $(".facebox").remove()
+            }, 1000)
         })
     })
 }
