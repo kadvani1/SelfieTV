@@ -6,161 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Sky</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-
-        body {
-            margin:0px;
-        }
-
-        #x {
-            position: absolute;
-            right:10px;
-            top: 10px;
-            color: white;
-            font-size: x-large;
-
-        }
-
-        #x div {
-            background-color: black;
-            opacity: 0.7;
-            font-size: smaller;
-            font-family: 'Andale Mono', AndaleMono, monospace;
-            color: green;
-        }
-
-        #x div ul {
-            padding: 4px;
-        }
-
-        #vid  {
-            width: 200px;
-
-        }
-        ol {
-          padding:0px;
-        }
-        li {
-          list-style-type: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
-  <body>
+
+<body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
-
     <div id="x">
-    <video autoplay id="vid"></video>
-<canvas id="photo" style="display:none"></canvas>
-        <div></div>
+        <video autoplay id="vid"></video>
+        <canvas id="photo" style="display:none"></canvas>
+        <div id="messages"></div>
     </div>
 
-    <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "http://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-
-      var videos = {
-        'sex in the city': 'a6738DN4I3s',
-        'game of thrones': 'y0OqdTUf4sc',
-        'american psycho': 'qQx_AN02XuM',
-        'top gear':'FssQhpAqv1I',
-        'top gear 2':'DrUVMdkb4_k',
-        'football':'NurlfAcY378',
-        'forrest gump':'wvJ4wh1kwR8',
-        'the prestige':'ijXruSzfGEc',
-        'star wars':'tUW7EDJmWUA',
-        'fifty':'SfZWFDs0LxA',
-        'gopro':'wTcNtgA6gHs',
-        'national':'cr-er44rr2M',
-        'bond':'BsBd9tPK4uE',
-        'mission':'TTrUyOvsHeM',
-        'wing':'o6mPnvrBYrE',
-      }
-
-
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: window.innerHeight,
-          width: window.innerWidth,
-          videoId: videos['national'],
-          startSeconds: 8,
-          suggestedQuality: 'highres',
-
-
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-
-          }
-        });
-      
-      }
-
-      function updateVideo(people) {
-        if(people.length == 1&&people[0].gender=='male')
-        {
-          changeVideo('national')
-        }
-        else if (people[0].gender == 'female') {
-          changeVideo('sex in the city')
-        }
-        else if (people.length == 2) {
-          changeVideo('mission')
-        }
-        else if (people.length ==3) {
-          changeVideo('wing')
-        }
-        else if (people.length ==4) {
-          changeVideo('star wars')
-        }
-      }
-
-      function changeVideo(i) {
-        var next = videos[i]
-        var current = player.getVideoData()['video_id'];
-        if(next != current)
-        player.loadVideoById({
-          videoId: next,
-          startSeconds: 8,
-          suggestedQuality: 'highres',
-          iv_load_policy: 3
-        })
-      }
-
-
-      
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          // setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-    </script>
-
+    <script src="js/youtube.js"></script>
     <script src="js/webcam.js"></script>
-  </body>
+</body>
+
 </html>
