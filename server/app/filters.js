@@ -12,11 +12,13 @@ var getFilters = exports.getFilters = function (number_of_people, photo, gender)
   }
 
   function tags(photo) {
+
   var res = {
     tags: [],
     sub_genres: [],
     genre: null
   };
+
       var tags = [];
       if (number_of_people == 1) {
           if(gender[0] == "m"){
@@ -169,8 +171,9 @@ var getFilters = exports.getFilters = function (number_of_people, photo, gender)
 
           }
       }
+      return res;
   }
-  return res;
+  
 }
 
 module.exports = exports;
