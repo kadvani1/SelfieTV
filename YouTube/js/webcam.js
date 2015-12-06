@@ -123,6 +123,7 @@ function emotion(imageDataBlob) {
                           moustache: Math.round(dd.faceAttributes.facialHair.moustache * 10) / 10,
                           smile: dd.faceAttributes.smile == null ? 0 : Math.round(dd.faceAttributes.smile * 10) / 10
                       }
+                        chart(person.smile, i-1)
                       people.push(person)
                         return "<li>" +
                             "<ul>" +
@@ -159,6 +160,8 @@ function emotion(imageDataBlob) {
             setTimeout(function () {
                 $(".facebox").remove()
             }, 1000)
+
+
 
             //Pietro
             var ages = []
