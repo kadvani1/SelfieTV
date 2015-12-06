@@ -106,8 +106,12 @@ function emotion(imageDataBlob) {
                     if (ee) {
                       var person = {
                           position: dd.faceRectangle,
-                        age: dd.faceAttributes.age,
-                        gender: dd.faceAttributes.gender
+                          age: dd.faceAttributes.age,
+                          gender: dd.faceAttributes.gender,
+                          emotion: maxEmotion,
+                          beard: dd.faceAttributes.facialHair.beard,
+                          moustache: dd.faceAttributes.facialHair.moustache,
+                          smile: dd.faceAttributes.smile
                       }
                       people.push(person)
                         return "<li>" +
