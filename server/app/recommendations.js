@@ -9,20 +9,28 @@ var knex = require('knex')({
 
 module.exports = {
 
-    getMatches: function(tags) {
+    getMatches: function(res) {
 
-        tags = tags || [];
         var query = knex
-            .distinct('name', 'programme_uuid', 'tags')
+            .distinct('name', 'tags')
             .select()
             .from('sky_programme_metadata');
 
-            tags.forEach(function (tag) {
-                query.orWhere('tags', 'like', '%' + tag + '%')
-            })
+        var subquery = knex
+            .select('name')
+
+        res.sub_genres.forEach(function(sub_genre) {
+            subquery.orWhere('sub-genres', 'like', '%' + sub_genre + '%')
+        });
+
+        res.tags.forEach(function(tag) {
+            query.orWhere('tags', 'like', '%' + tag + '%')
+                .where('name', 'in', subquery)
+        });
+
         return query.then(function(rows) {
-                return rows;
-            });
+            return rows;
+        });
     },
     getTags: function(key_word) {
 

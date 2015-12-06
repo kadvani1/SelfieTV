@@ -1,4 +1,4 @@
-var getFilters = exports.getFilters = function (number_of_people, photo, gender) {
+var getFilters = exports.getFilters = function (photo, number_of_people, gender) {
 
   function age(list_of_ages) {
 
@@ -174,6 +174,7 @@ var getFilters = exports.getFilters = function (number_of_people, photo, gender)
       return res;
   }
   
+  return tags(photo);
 }
 
 module.exports = exports;

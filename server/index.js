@@ -29,10 +29,10 @@ async = require("async");
 app.get('/', function(req, res, next) {
 
     var number_of_people = 1;
-    var photo = [20, 30, 40];
-    var gender;
+    var photo = [9];
+    var gender = ['m'];
 
-    var tags = filters.getFilters(number_of_people, photo, gender);
+    var tags = filters.getFilters(photo, number_of_people, gender);
     console.log(tags)
     recs.getMatches(tags)
         .then(function(results) {
