@@ -1,0 +1,22 @@
+{
+  "name": "SelfieTV",
+  "homepage": "https://github.com/kadvani1/SelfieTV",
+  "authors": [
+    "Ben <ben>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "WebcamSwiper": "https://github.com/iambrandonn/WebcamSwiper.git"
+  }
+}

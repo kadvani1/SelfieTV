@@ -1,6 +1,8 @@
 body {
         margin: 0px;
-    }
+    font-family: 'Andale Mono', AndaleMono, monospace;
+
+}
     
     #webcam {
         position: absolute;
@@ -37,12 +39,12 @@ body {
         background-color: black;
         opacity: 0.7;
         font-size: smaller;
-        font-family: 'Andale Mono', AndaleMono, monospace;
         color: green;
+        padding: 3px
     }
     
     #vid {
-        width: 200px;
+        width: 300px;
     }
     
     ol {
@@ -51,4 +53,13 @@ body {
     
     li {
         list-style-type: none;
+    }
+
+    .suggestions {
+        text-align: center;
+        width: 300px;
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+        padding: 3px;
+        padding-bottom: 7px;
     }

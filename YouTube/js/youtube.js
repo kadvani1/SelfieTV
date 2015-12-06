@@ -1,4 +1,3 @@
-
     // 2. This code loads the IFrame Player API code asynchronously.
     var tag = document.createElement('script');
 
@@ -70,16 +69,20 @@
 
     }
 
+    var justSwitched = false
     function changeVideo(i) {
+        console.log("change", i)
         var next = videos[i]
         var current = player.getVideoData()['video_id'];
-        if (next != current)
+        if (next != current) {
+            justSwitched = true
             player.loadVideoById({
                 videoId: next,
                 startSeconds: 8,
                 suggestedQuality: 'highres',
                 iv_load_policy: 3
             })
+        }
     }
 
 
