@@ -23,10 +23,24 @@ module.exports = {
             subquery.orWhere('sub-genres', 'like', '%' + sub_genre + '%')
         });
 
-        res.tags.forEach(function(tag) {
-            query.orWhere('tags', 'like', '%' + tag + '%')
-                .where('name', 'in', subquery)
+        var subquery2 = knex
+            .select('name')
+
+        res.no_sub_genres.forEach(function(no_sub_genre) {
+            subquery2.orWhere('sub-genres', 'like', '%' + no_sub_genre + '%')
         });
+
+        var subquery3 = knex
+            .select('name')
+
+        res.tags.forEach(function(tag) {
+            subquery3.orWhere('tags', 'like', '%' + tag + '%')
+        });
+
+        query
+            .andWhere('name', 'in', subquery3)
+            .andWhere('name', 'not in', subquery2)
+            .andWhere('name', 'in', subquery)
 
         return query.then(function(rows) {
             return rows;

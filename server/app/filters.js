@@ -16,6 +16,7 @@ var getFilters = exports.getFilters = function (photo, number_of_people, gender)
   var res = {
     tags: [],
     sub_genres: [],
+    no_sub_genres: [],
     genre: null
   };
 
@@ -26,6 +27,7 @@ var getFilters = exports.getFilters = function (photo, number_of_people, gender)
 
               res.tags = ["kids","cartoon","adventures","animation","superhero"];
                res.sub_genres = ["animation","cartoon"];
+               res.no_sub_genres= ["adult_animation"]
 
           }
           if (age(photo) >= 10 && age(photo) < 20) {

@@ -24,6 +24,9 @@ async = require("async");
 //   }
 // );
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 app.get('/', function(req, res, next) {
@@ -38,7 +41,7 @@ app.get('/', function(req, res, next) {
         .then(function(results) {
 
             res.json({
-                matches: results
+                matches: results[getRandomInt(0, results.length)]
             });
         })
         .catch(function(error) {
