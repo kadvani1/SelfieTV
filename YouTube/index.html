@@ -74,14 +74,16 @@
         'american psycho': 'qQx_AN02XuM',
         'top gear':'FssQhpAqv1I',
         'top gear 2':'DrUVMdkb4_k',
-        'football':'4PE10OLJtmU',
+        'football':'NurlfAcY378',
         'forrest gump':'wvJ4wh1kwR8',
         'the prestige':'ijXruSzfGEc',
         'star wars':'tUW7EDJmWUA',
         'fifty':'SfZWFDs0LxA',
         'gopro':'wTcNtgA6gHs',
         'national':'cr-er44rr2M',
-        'bond':'BsBd9tPK4uE'
+        'bond':'BsBd9tPK4uE',
+        'mission':'TTrUyOvsHeM',
+        'wing':'o6mPnvrBYrE',
       }
 
 
@@ -92,6 +94,7 @@
           videoId: videos['national'],
           startSeconds: 8,
           suggestedQuality: 'highres',
+
 
           events: {
             'onReady': onPlayerReady,
@@ -111,10 +114,14 @@
           changeVideo('sex in the city')
         }
         else if (people.length == 2) {
-          changeVideo('bond')
+          changeVideo('mission')
         }
-        else if (people.length ==3)
-          changeVideo('top gear')
+        else if (people.length ==3) {
+          changeVideo('wing')
+        }
+        else if (people.length ==4) {
+          changeVideo('star wars')
+        }
       }
 
       function changeVideo(i) {
@@ -124,7 +131,8 @@
         player.loadVideoById({
           videoId: next,
           startSeconds: 8,
-          suggestedQuality: 'highres'
+          suggestedQuality: 'highres',
+          iv_load_policy: 3
         })
       }
 
