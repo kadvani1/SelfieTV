@@ -51,7 +51,7 @@ function detect(imageDataBlob) {
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
                 xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",
-                    choose(["2e87d66f93c241dd8ec805d09c38f92b", "f7b776d5d3a84e3a9f48f3ff12d067af"]));
+                    choose(["eb6e0170133744c4a38c511ff5074565", "2e87d66f93c241dd8ec805d09c38f92b", "f7b776d5d3a84e3a9f48f3ff12d067af"]));
             },
             type: "POST",
             // Request body
@@ -75,7 +75,7 @@ function emotion(imageDataBlob) {
                 // Request headers
                 xhrObj.setRequestHeader("Content-Type", 'application/octet-stream');
                 xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key",
-                    choose(["e1276d5f08ae438ca10b0a7c19ef4e8c", "c14f3203d1904ec298aca7c44efd89dd", "3debebcc0f37452aa435e081683b4faa"]));
+                    choose(["d9cf482cc7d14f2cb4c3ac478e82bf33", "e1276d5f08ae438ca10b0a7c19ef4e8c", "c14f3203d1904ec298aca7c44efd89dd", "3debebcc0f37452aa435e081683b4faa"]));
             },
             type: "POST",
             // Request body
