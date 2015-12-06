@@ -48,17 +48,23 @@
     }
 
     function updateVideo(people) {
-        if (people.length == 1 && people[0].gender == 'male') {
+        if (people.length == 1 && people[0].gender == 'male' && people[0].maxEmotion == 'happiness')  {
+            changeVideo('top gear 2')
+        }
+
+        else if (people.length == 1 && people[0].gender == 'male') {
             changeVideo('national')
-        } else if (people[0].gender == 'female') {
+        } 
+        else if (people[0].gender == 'female') {
             changeVideo('sex in the city')
         } else if (people.length == 2) {
             changeVideo('mission')
         } else if (people.length == 3) {
-            changeVideo('wing')
-        } else if (people.length == 4) {
             changeVideo('star wars')
+        } else if (people.length > 4) {
+            changeVideo('wing')
         }
+
     }
 
     function changeVideo(i) {
