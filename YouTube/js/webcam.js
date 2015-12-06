@@ -91,7 +91,7 @@ function emotion(imageDataBlob) {
         d.then(function (dData) {
             var i = 0
             var people = []
-            $("#x div").html("<ol>" + dData.map(function (dd) {
+            $("#messages").html("<ol>" + dData.map(function (dd) {
                     var ee = eData[i++]
                     var max = 0
                     var maxEmotion = ""
