@@ -21,7 +21,7 @@ var getFilters = exports.getFilters = function (photo, number_of_people, gender)
   };
 
       var tags = [];
-      if ( == 1) {
+      if (number_of_people == 1) {
           if(gender[0] == "m"){
           if (age(photo) < 10) {
 
