@@ -6,6 +6,9 @@ var async = require("async");
 var recs = require('./app/recommendations');
 var filters = require('./app/filters');
 
+var qt = require('quickthumb');
+app.use(qt.static(__dirname + '/'));
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -13,7 +16,7 @@ function getRandomInt(min, max) {
 app.get('/', function(req, res, next) {
 
     var number_of_people = req.query.num;
-    var photo = req.query.ages.split(',');
+    var photo = req.query.ages.split(',').map(Number);
     var gender = req.query.genders.split(',');
 
     var tags = filters.getFilters(photo, number_of_people, gender);
@@ -21,8 +24,10 @@ app.get('/', function(req, res, next) {
     recs.getMatches(tags)
         .then(function(results) {
 
+            var match = results[getRandomInt(0, results.length)]
+            match.thumb = '/images/' + match.programme_uuid + '.jpeg';
             res.json({
-                matches: results[getRandomInt(0, results.length)]
+                matches: match
             });
         })
         .catch(function(error) {
@@ -31,33 +36,6 @@ app.get('/', function(req, res, next) {
         });
 });
 
-app.get('/test', function(req, res, next) {
-
-    recs.getTags()
-        .then(function(results) {
-
-            var uniqTags = [];
-
-            uniqTags = _.chain(results)
-                .map(function(line) {
-                    return line.split(';');
-                })
-                .flatten()
-                .reduce(function(word) {
-                    counts[word] = (counts[word] || 0) + 1;
-                    return counts;
-                }, {})
-                .value();
-
-            res.json({
-                tags: uniqTags
-            });
-        })
-        .catch(function(error) {
-            console.error(error);
-            return next(new Error("Something went wrong"));
-        });
-});
 
 var server = app.listen(3000, function() {
     var host = server.address().address;

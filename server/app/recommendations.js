@@ -12,7 +12,7 @@ module.exports = {
     getMatches: function(res) {
 
         var query = knex
-            .distinct('name', 'tags')
+            .distinct('name', 'tags', 'programme_uuid')
             .select()
             .from('sky_programme_metadata');
 
