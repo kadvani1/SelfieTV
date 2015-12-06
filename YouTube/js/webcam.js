@@ -54,7 +54,6 @@ function detect(imageDataBlob) {
             console.log(data)
         })
         .fail(function (e) {
-            alert("error");
             console.log(e)
         });
 }
@@ -77,7 +76,6 @@ function emotion(imageDataBlob) {
             console.log(data)
         })
         .fail(function (e) {
-            alert("error");
             console.log(e)
         });
 }
@@ -106,8 +104,12 @@ function emotion(imageDataBlob) {
                     if (ee) {
                       var person = {
                           position: dd.faceRectangle,
-                        age: dd.faceAttributes.age,
-                        gender: dd.faceAttributes.gender
+                          age: dd.faceAttributes.age,
+                          gender: dd.faceAttributes.gender,
+                          emotion: maxEmotion,
+                          beard: dd.faceAttributes.facialHair.beard,
+                          moustache: dd.faceAttributes.facialHair.moustache,
+                          smile: dd.faceAttributes.smile
                       }
                       people.push(person)
                         return "<li>" +
@@ -134,7 +136,10 @@ function emotion(imageDataBlob) {
                 var left = Math.round(pos.left * factor);
                 var width = Math.round(pos.width * factor);
                 var height = Math.round(pos.height * factor);
-                var facebox = $("<div class='facebox' style='border: 3px solid " + (p.gender == 'male' ? 'blue' : 'pink') + "; position: absolute'></div>").css({top: top + "px", left: left + "px", width: width + "px", height: height + "px"})
+                var facebox = $("<div class='facebox' style='border: 3px solid "
+                    + (p.gender == 'male' ? 'blue' : 'pink') +
+                    "; position: absolute'></div>")
+                    .css({top: top + "px", left: left + "px", width: width + "px", height: height + "px"})
                 $("#webcam").append(facebox)
             })
         })
