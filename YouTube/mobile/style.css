@@ -1,0 +1,75 @@
+body {
+        margin: 0px;
+    font-family: 'Andale Mono', AndaleMono, monospace;
+
+}
+    
+    #webcam {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: white;
+        font-size: small;
+        width: 100px;
+    }
+
+    video, #webcam div {
+        border-radius: 5px
+    }
+    
+    #webcam #messages {
+        background-color: black;
+        opacity: 0.7;
+        font-size: smaller;
+        font-family: 'Andale Mono', AndaleMono, monospace;
+        color: green;
+    }
+    
+    #webcam #messages ul {
+        padding: 4px;
+    }
+    
+    #webcam.ads {
+        position: absolute;
+        right: 10px;
+        top: 800px;
+        font-size: small;
+        width: 100px;
+    }
+    
+    #webcam #ads #adtext {
+        background-color: black;
+        opacity: 0.7;
+        font-size: smaller;
+        color: green;
+        padding: 3px
+    }
+    
+    #vid {
+        width: 100px;
+    }
+    
+    ol {
+        padding: 0px;
+    }
+    
+    li {
+        list-style-type: none;
+    }
+
+    .suggestions {
+        text-align: center;
+        width: 100px;
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+        padding: 3px;
+        padding-bottom: 7px;
+    }
+
+    canvas#chart {
+        position: absolute;
+        bottom: 15px;
+        border-radius: 5px;
+        background-color: black;
+        right: 0px;
+    }
