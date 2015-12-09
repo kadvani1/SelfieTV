@@ -1,2 +1,2 @@
 # SelfieTV
-Selfie TV using Image Recognition for SkyTV Recommendation
+SelfieTV - An Artificially Intelligent TV That Changes The Program Based On Who Is Watching
